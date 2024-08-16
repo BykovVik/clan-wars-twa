@@ -6,6 +6,8 @@ const HomePage = () => {
 
     const [data, setUserData] = useState([])
     const [error, setError] = useState()
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const [clan, setUserInClan] = useState(null)
 
     useEffect(() => {
         if (window.Telegram && window.Telegram.WebApp) {
@@ -19,9 +21,28 @@ const HomePage = () => {
             } else {
                 console.error('User data is not available');
             }
-          }
+        }
+
+        checkUser(2) //на боевом серве поместить внутрь верхнего условия
         
     }, [])
+
+    const checkUser = async(user_id) => {
+        try {
+            const response = await axios.get(`/user/${user_id}`);
+            if (response) {
+                setIsLoggedIn(true)
+                if(response.data.clan_id) {
+                    setUserInClan(true)
+                } else {
+                    setUserInClan(false)
+                }
+            }
+        } catch (error) {
+            console.error(error)
+            setIsLoggedIn(false)
+        }
+    }
 
     const regHandler = async() => {
         try {
@@ -31,17 +52,15 @@ const HomePage = () => {
                 score: 20,
                 penalties: 11,
                 rating: 211,
-                //"clan_id": 232323 не отправляем
-            },);
-        
-            console.log('User created:', response.data);
+                clan_id: null
+            });
+            if (response) {
+                setIsLoggedIn(true)
+            }
         } catch (error) {
             setError(error)
         }
     }
-
-    const isLoggedIn = false;
-    const clan = null;
 
     return (
         <div className="Container">
