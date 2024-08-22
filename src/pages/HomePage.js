@@ -47,8 +47,8 @@ const HomePage = () => {
     const regHandler = async() => {
         try {
             const response = await axios.post('/users/', {
-                name: "tony",
-                user_id: 2,
+                name: "tony", //data.first_name
+                user_id: 2, //data.id
                 score: 20,
                 penalties: 11,
                 rating: 211,
@@ -70,21 +70,11 @@ const HomePage = () => {
                     clan ? (
                     <p>Вы в клане {clan.name}</p>
                     ) : (
-                    <p>Вы не состоите в клане. <Link to="/">Присоединитесь к клану</Link>.</p>
+                    <p>Вы не состоите в клане. <Link to="/clan-list" state={{user_id: 2}}>Присоединитесь к клану</Link>.</p>
                     )
                 ) : (
                     <div>
-                        {error &&
-                            <>
-                                <p>{error.message}</p>
-                                <p>{error.name}</p>
-                                <p>{error.code}</p>
-                            </>
-                        }
                         <p>Вы не зарегистрированы. <Link onClick={regHandler} to="/">Зарегистрируйтесь</Link>.</p>
-                        <p style={{color: "white"}}>{data.id}</p>
-                        <p style={{color: "white"}}>{data.first_name}</p>
-                        <p style={{color: "white"}}>{data.username}</p>
                     </div>
                 )}
             </div>
