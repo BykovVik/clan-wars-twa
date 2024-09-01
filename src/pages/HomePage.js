@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import { Link } from "react-router-dom";
 import axios from 'axios';
+import logo from "../image/logo.png"
 
 const HomePage = () => {
 
@@ -51,7 +52,7 @@ const HomePage = () => {
                 user_id: 2, //data.id
                 score: 20,
                 penalties: 11,
-                rating: 211,
+                is_capitan: false,
                 clan_id: null
             });
             if (response) {
@@ -65,17 +66,26 @@ const HomePage = () => {
     return (
         <div className="Container">
             <div className="ContentBox">
-                <h1>Добро пожаловать в Игру Кланов</h1>
+                <img src={logo} alt="pic" />
                 {isLoggedIn ? (
                     clan ? (
-                    <p>Вы в клане {clan.name}</p>
+                    <>
+                    <p>Вы в клане</p>
+                    <p className="RegButton"><Link to="/clan-list" state={{user_id: 2}}>Рейтинг кланов</Link></p>
+                    <p className="RegButton"><Link to="/user-list" state={{user_id: 2}}>Рейтинг игроков</Link></p>
+                    </>
+
                     ) : (
-                    <p>Вы не состоите в клане. <Link to="/clan-list" state={{user_id: 2}}>Присоединитесь к клану</Link>.</p>
+                    <>
+                    <p>Вы не состоите в клане.</p>
+                    <p className="RegButton"><Link to="/clan-list" state={{user_id: 2}}>Присоединитесь к клану</Link></p>
+                    </>
                     )
                 ) : (
-                    <div>
-                        <p>Вы не зарегистрированы. <Link onClick={regHandler} to="/">Зарегистрируйтесь</Link>.</p>
-                    </div>
+                    <>
+                        <p>Вы не зарегистрированы.</p>
+                        <p className="RegButton"><Link onClick={regHandler} to="/">Зарегистрируйтесь</Link></p>
+                    </>
                 )}
             </div>
         </div>

@@ -1,15 +1,104 @@
+@font-face {
+    font-family: 'Klyakson';
+    src: url('./fonts/Klyakson.otf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
 * {
     margin: 0;
     padding: 0;
 }
-
+/*******************************************HOME PAGE******************************************************/
 .Container {
     display: flex;
     height: 100vh;
     text-align: center;
-    background-color: grey;
+    background-color: #1B2431;
+    padding: 25px;
+    color: white;
+    text-align: center;
 }
 .ContentBox {
     align-self: center;
     width: 100%;
 }
+.ContentBox > img {
+    width: 100%;
+}
+.ContentBox {
+    font-size: 28px;
+    font-family: 'Klyakson', sans-serif;
+}
+.RegButton {
+    background-color: #1E488F;
+    color: white;
+    border-radius: 5px;
+    margin-top: 20px;
+    padding: 10px;
+}
+.RegButton > a {
+    text-decoration: none;
+    color: white;
+}
+/*********************************************LIST PAGE*****************************************************/
+.ListContainer {
+    padding: 0 25px;
+    background-color: #1E488F;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    height: 100vh;
+    font-family: 'Klyakson', sans-serif;
+    text-align: center;
+}
+.Sort > img {
+    width: 32px;
+    height: 32px;
+    vertical-align: middle;
+}
+.ListContainer > ul {
+    text-align: center;
+}
+.Item {
+    list-style-type: none;
+    margin-top: 15px;
+}
+.Item > img {
+    width: 32px;
+    height: 32px;
+    margin-left: 5px;
+    vertical-align: middle;
+}
+.Pagination {
+    margin-top: 25px;
+    text-align: center;
+}
+.Arrow {
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    outline: none;
+}
+.Arrow > img {
+    width: 32px;
+    height: 32px;
+    vertical-align: middle;
+}
+.BackArrow {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 34px;
+    cursor: pointer;
+}
+/*
+
+blocky dark
+#1B2431
+inhaling peacock blue
+#016795
+ordained cobalt
+#1E488F
+
+*/
