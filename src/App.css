@@ -1,6 +1,6 @@
 @font-face {
-    font-family: 'Klyakson';
-    src: url('./fonts/Klyakson.otf') format('truetype');
+    font-family: 'segoe';
+    src: url('./fonts/segoe-ui-black.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
   }
@@ -14,9 +14,10 @@
     display: flex;
     height: 100vh;
     text-align: center;
-    background-color: #1B2431;
+    background-color: #222831;
+    font-size: 16px;
     padding: 25px;
-    color: white;
+    color: #EEEEEE;
     text-align: center;
 }
 .ContentBox {
@@ -27,15 +28,15 @@
     width: 100%;
 }
 .ContentBox {
-    font-size: 28px;
-    font-family: 'Klyakson', sans-serif;
+    font-family: 'segoe', sans-serif;
 }
 .RegButton {
-    background-color: #1E488F;
-    color: white;
+    background-color: #FF5722; /* #FF5722 */
+    color: #EEEEEE;
     border-radius: 5px;
     margin-top: 20px;
     padding: 10px;
+    font-size: 20px;
 }
 .RegButton > a {
     text-decoration: none;
@@ -44,13 +45,13 @@
 /*********************************************LIST PAGE*****************************************************/
 .ListContainer {
     padding: 0 25px;
-    background-color: #1E488F;
-    color: white;
+    background-color: #EEEEEE;
+    color: #2D4059;
     display: flex;
     flex-direction: column;
     justify-content: center; 
     height: 100vh;
-    font-family: 'Klyakson', sans-serif;
+    font-family: 'segoe', sans-serif;
     text-align: center;
 }
 .Sort > img {
@@ -61,11 +62,11 @@
 .ListContainer > ul {
     text-align: center;
 }
-.Item {
+.ListContainer > ul > li {
     list-style-type: none;
     margin-top: 15px;
 }
-.Item > img {
+.ListContainer > ul > li > img {
     width: 32px;
     height: 32px;
     margin-left: 5px;
@@ -92,13 +93,13 @@
     font-size: 34px;
     cursor: pointer;
 }
-/*
-
-blocky dark
-#1B2431
-inhaling peacock blue
-#016795
-ordained cobalt
-#1E488F
-
-*/
+/***********************************************SEARC PAGE************************************************/
+.ListContainer > input {
+    border: 2px solid #2D4059;
+    border-radius: 15px;
+    padding: 15px;
+    outline: none;
+}
+.ListContainer > input:focus {
+    border: 2px solid #FF5722;
+}

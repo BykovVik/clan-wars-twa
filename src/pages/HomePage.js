@@ -68,19 +68,12 @@ const HomePage = () => {
             <div className="ContentBox">
                 <img src={logo} alt="pic" />
                 {isLoggedIn ? (
-                    clan ? (
                     <>
-                    <p>Вы в клане</p>
-                    <p className="RegButton"><Link to="/clan-list" state={{user_id: 2}}>Рейтинг кланов</Link></p>
-                    <p className="RegButton"><Link to="/user-list" state={{user_id: 2}}>Рейтинг игроков</Link></p>
+                        <p className="RegButton"><Link to="/clan-list" state={{user_id: 2}}>Рейтинг кланов</Link></p>
+                        <p className="RegButton"><Link to="/user-list" state={{user_id: 2}}>Рейтинг игроков</Link></p>
+                        <p className="RegButton"><Link to="/clan-search" state={{user_id: 2}}>Бросить вызов</Link></p>
                     </>
-
-                    ) : (
-                    <>
-                    <p>Вы не состоите в клане.</p>
-                    <p className="RegButton"><Link to="/clan-list" state={{user_id: 2}}>Присоединитесь к клану</Link></p>
-                    </>
-                    )
+                    
                 ) : (
                     <>
                         <p>Вы не зарегистрированы.</p>

@@ -1,8 +1,14 @@
-import React from 'react';
+import React, {useCallback} from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const BackButton = ({ onClick }) => {
+const BackButton = () => {
+    const navigate = useNavigate();
+    const backClick = useCallback(() => {
+        navigate("/");
+    }, [navigate]);
+
     return (
-        <div className="BackArrow" onClick={onClick}>
+        <div className="BackArrow" onClick={backClick}>
             ← 
         </div>
     );

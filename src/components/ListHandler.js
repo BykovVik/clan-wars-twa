@@ -56,9 +56,7 @@ const ListHandler = ({ path, user }) => {
         return data ? Math.ceil(data.length / itemsPerPage) : 0;
     }, [data]);
 
-    const backClick = useCallback(() => {
-        navigate("/");
-    }, [navigate]);
+    
 
     const handlePageChange = useCallback((pageNumber) => {
         if (pageNumber > 0 && pageNumber <= totalPages) {
@@ -68,7 +66,7 @@ const ListHandler = ({ path, user }) => {
 
     return (
         <div className="ListContainer">
-            <BackButton onClick={backClick} />
+            <BackButton/>
             <SortButton onSort={handleSort} />
             <List
                 items={currentItems}
