@@ -1,17 +1,11 @@
-import React, { useEffect, useState, useCallback, useMemo } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import axios from "axios";
-import Pagination from './Pagination';
 import BackButton from './BackButton';
-import SortButton from './SortButton';
 import List from './List';
-import { useNavigate } from 'react-router-dom';
 
-const ListHandler = ({ path, user }) => {
+const ListHandler = ({ path }) => {
     const [data, setData] = useState(null);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [sortOrder, setSortOrder] = useState('desc');
-    const itemsPerPage = 10;
-    const navigate = useNavigate();
+    const [title, setTitle] = useState();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -26,56 +20,34 @@ const ListHandler = ({ path, user }) => {
         fetchData();
     }, [path]);
 
-    const handleSort = useCallback(() => {
-        setSortOrder(prevOrder => prevOrder === 'asc' ? 'desc' : 'asc');
-    }, []);
-
-    const sortedItems = useMemo(() => {
+    const sortedTopItems = useMemo(() => {
         if (!Array.isArray(data)) return [];
 
-        return [...data].sort((a, b) => {
+        const sorted = [...data].sort((a, b) => {
             if (a.wins !== undefined) {
                 if (a.wins === b.wins) {
                     return a.losses - b.losses;
                 }
-                return sortOrder === 'asc' ? a.wins - b.wins : b.wins - a.wins;
+                setTitle("clans")
+                return b.wins - a.wins;
             } else {
-                return sortOrder === 'asc' ? a.score - b.score : b.score - a.score;
+                if (a.score === b.score) {
+                    return a.penalties - b.penalties;
+                }
+                setTitle("users")
+                return b.score - a.score;
             }
         });
-    }, [data, sortOrder]);
-
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-
-    const currentItems = useMemo(() => {
-        return sortedItems.slice(indexOfFirstItem, indexOfLastItem);
-    }, [sortedItems, indexOfFirstItem, indexOfLastItem]);
-
-    const totalPages = useMemo(() => {
-        return data ? Math.ceil(data.length / itemsPerPage) : 0;
+        return sorted.slice(0, 10);
     }, [data]);
-
-    
-
-    const handlePageChange = useCallback((pageNumber) => {
-        if (pageNumber > 0 && pageNumber <= totalPages) {
-            setCurrentPage(pageNumber);
-        }
-    }, [totalPages]);
 
     return (
         <div className="ListContainer">
-            <BackButton/>
-            <SortButton onSort={handleSort} />
-            <List
-                items={currentItems}
-                user={user}
+            <BackButton
+                title={title}
             />
-            <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={handlePageChange}
+            <List
+                items={sortedTopItems}
             />
         </div>
     );

@@ -6,9 +6,8 @@ import logo from "../image/logo.png"
 const HomePage = () => {
 
     const [data, setUserData] = useState([])
-    const [error, setError] = useState()
+    const [player, setPlayer] = useState(null)
     const [isLoggedIn, setIsLoggedIn] = useState(false)
-    const [clan, setUserInClan] = useState(null)
 
     useEffect(() => {
         if (window.Telegram && window.Telegram.WebApp) {
@@ -18,13 +17,12 @@ const HomePage = () => {
             
             if (userParam) {
                 const user = JSON.parse(decodeURIComponent(userParam));
+                checkUser(user.user_id)
                 setUserData(user);
             } else {
                 console.error('User data is not available');
             }
         }
-
-        checkUser(2) //на боевом серве поместить внутрь верхнего условия
         
     }, [])
 
@@ -32,26 +30,25 @@ const HomePage = () => {
         try {
             const response = await axios.get(`/user/${user_id}`);
             if (response) {
-                setIsLoggedIn(true)
-                if(response.data.clan_id) {
-                    setUserInClan(true)
-                } else {
-                    setUserInClan(false)
+                if(response.status === 200) {
+                    setIsLoggedIn(true)
+                }
+                if(response.data.user_id){
+                    setPlayer(response.data)
                 }
             }
         } catch (error) {
-            console.error(error)
             setIsLoggedIn(false)
         }
     }
 
     const regHandler = async() => {
         try {
-            const response = await axios.post('/users/', {
-                name: "tony", //data.first_name
-                user_id: 2, //data.id
-                score: 20,
-                penalties: 11,
+            const response = await axios.post('/user/', {
+                name: data.first_name,
+                user_id: data.user_id,
+                score: 0,
+                penalties: 0,
                 is_capitan: false,
                 clan_id: null
             });
@@ -59,7 +56,7 @@ const HomePage = () => {
                 setIsLoggedIn(true)
             }
         } catch (error) {
-            setError(error)
+            setPlayer(null)
         }
     }
 
@@ -69,9 +66,9 @@ const HomePage = () => {
                 <img src={logo} alt="pic" />
                 {isLoggedIn ? (
                     <>
-                        <p className="RegButton"><Link to="/clan-list" state={{user_id: 2}}>Рейтинг кланов</Link></p>
-                        <p className="RegButton"><Link to="/user-list" state={{user_id: 2}}>Рейтинг игроков</Link></p>
-                        <p className="RegButton"><Link to="/clan-search" state={{user_id: 2}}>Бросить вызов</Link></p>
+                        <p className="RegButton"><Link to="/clan-list"> Clan rating</Link></p>
+                        <p className="RegButton"><Link to="/user-list"> User rating</Link></p>
+                        <p className="RegButton"><Link to="/clan-search" state={{user: player}}> Challenge to a duel</Link></p>
                     </>
                     
                 ) : (

@@ -1,31 +1,44 @@
 import React from 'react';
-import axios from "axios";
-import { useNavigate } from 'react-router-dom';
+import king_gold from "../image/king_gold.png"
+import king_silver from "../image/king_silver.png"
+import king_bronze from "../image/king_bronze.png"
+import king_empty from "../image/king_empty.png"
 
-const ListItem = ({ item, user }) => {
+const ListItem = ({ item, index }) => {
     const isClan = item.wins !== undefined;
-    const navigate = useNavigate();
-
-    const addUserToClan = async (newClanId) => {
-        try {
-            const response = await axios.patch(`/user/${user.user_id}`, { clan_id: newClanId });
-            if (response.data) {
-                navigate("/");
-            }
-        } catch (error) {
-            console.error("Ошибка при добавлении пользователя в клан:", error);
-        }
-    };
 
     return (
         <li>
             {isClan ? (
                 <>
-                    {item.title.substring(0, 20)} - {item.wins} - {item.losses}
+                    {index + 1 === 1 && (
+                        <p><img src={king_gold} alt='pic'/> {item.title.substring(0, 20)} - {item.wins} - {item.losses}</p>
+                    )}
+                    {index + 1 === 2 && (
+                        <p><img src={king_silver} alt='pic'/> {item.title.substring(0, 20)} - {item.wins} - {item.losses}</p>
+                    )}
+                    {index + 1 === 3 && (
+                        <p><img src={king_bronze} alt='pic'/> {item.title.substring(0, 20)} - {item.wins} - {item.losses}</p>
+                    )}
+                    {index + 1 > 3 && (
+                        <p><img src={king_empty} alt='pic'/> {item.title.substring(0, 20)} - {item.wins} - {item.losses}</p>
+                    )}
                 </>
+                
             ) : (
                 <>
-                    {item.name} - {item.score}
+                    {index + 1 === 1 && (
+                        <p><img src={king_gold} alt='pic'/> {item.name} - {item.score} - {item.penalties}</p>
+                    )}
+                    {index + 1 === 2 && (
+                        <p><img src={king_silver} alt='pic'/> {item.name} - {item.score} - {item.penalties}</p>
+                    )}
+                    {index + 1 === 3 && (
+                        <p><img src={king_bronze} alt='pic'/> {item.name} - {item.score} - {item.penalties}</p>
+                    )}
+                    {index + 1 > 3 && (
+                        <p><img src={king_empty} alt='pic'/> {item.name} - {item.score} - {item.penalties}</p>
+                    )}
                 </>
             )}
         </li>

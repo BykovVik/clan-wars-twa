@@ -9,9 +9,8 @@ const ClanSearch = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [clans, setClans] = useState([]);
     const [filteredClans, setFilteredClans] = useState([]);
-    const [user, setUser] = useState()
     let { state } = useLocation();
-    const user_id = state.user_id
+    const user = state?.user
 
     useEffect(() => {
         const fetchClans = async () => {
@@ -22,16 +21,7 @@ const ClanSearch = () => {
                 console.error('Ошибка загрузки кланов:', error);
             }
         };
-
         fetchClans();
-
-        const getUser = async() => {
-            const response = await axios.get(`/user/${user_id}`);
-            if (response.data) {
-                setUser(response.data)
-            }
-        }
-        getUser()
     }, []);
 
     const handleInputChange = (event) => {
@@ -42,7 +32,6 @@ const ClanSearch = () => {
 
     const handleSearch = (term) => {
         if (term.trim() === '') {
-            // Если строка поиска пуста, очищаем отфильтрованный список
             setFilteredClans([]);
         } else {
             const lowercasedTerm = term.toLowerCase();
@@ -83,7 +72,9 @@ const ClanSearch = () => {
 
     return (
         <div className="ListContainer">
-            <BackButton />
+            <BackButton title="search"/>
+            {user?.is_capitan &&
+            <>
             <input
                 type="text"
                 value={searchTerm}
@@ -93,9 +84,11 @@ const ClanSearch = () => {
             <ul>
                 {filteredClans.length > 0 ? (
                     filteredClans
-                    .slice(-3)
+                    .slice(-5)
                     .map(clan => (
-                        <li key={clan?.id}>{clan.title.substring(0, 20)} - {clan.wins} - {clan.losses} <img onClick={() => challengeToFight(clan.chat_id)} src={war} alt="war icon" /></li>
+                        clan.id !== user.clan_id&&
+                            <li key={clan?.id}>{clan.title.substring(0, 20)} - {clan.wins} - {clan.losses} <img onClick={() => challengeToFight(clan.chat_id)} src={war} alt="war icon" /></li>
+                        
                     ))
                 ) : searchTerm === '' ? (
                     <li>Введите название клана для поиска</li>
@@ -103,6 +96,12 @@ const ClanSearch = () => {
                     <li>Кланы не найдены</li>
                 )}
             </ul>
+            </>
+            }
+
+            {!user?.is_capitan && 
+                <p style={{textAlign: 'center'}}>Этот интерфейс доступен исключительно Клан Лидерам. Если вы читаете это сообщение, значит вы таковым не являетесь.</p>
+            }
         </div>
     );
 };
