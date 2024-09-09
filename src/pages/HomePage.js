@@ -8,6 +8,7 @@ const HomePage = () => {
     const [data, setUserData] = useState([])
     const [player, setPlayer] = useState(null)
     const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const [error, setError] = useState()
 
     useEffect(() => {
         if (window.Telegram && window.Telegram.WebApp) {
@@ -20,7 +21,7 @@ const HomePage = () => {
                 checkUser(user.user_id)
                 setUserData(user);
             } else {
-                console.error('User data is not available');
+                setError("Telegram request error");
             }
         }
         
@@ -39,6 +40,10 @@ const HomePage = () => {
             }
         } catch (error) {
             setIsLoggedIn(false)
+
+            if (error) {
+                setError("Backend request error")
+            }
         }
     }
 
@@ -57,6 +62,9 @@ const HomePage = () => {
             }
         } catch (error) {
             setPlayer(null)
+            if (error) {
+                setError("Backend request error")
+            }
         }
     }
 
@@ -64,7 +72,8 @@ const HomePage = () => {
         <div className="Container">
             <div className="ContentBox">
                 <img src={logo} alt="pic" />
-                {isLoggedIn ? (
+                {!error&&
+                isLoggedIn ? (
                     <>
                         <p className="RegButton"><Link to="/clan-list"> Clan rating</Link></p>
                         <p className="RegButton"><Link to="/user-list"> User rating</Link></p>
@@ -77,6 +86,9 @@ const HomePage = () => {
                         <p className="RegButton"><Link onClick={regHandler} to="/">Зарегистрируйтесь</Link></p>
                     </>
                 )}
+                {error&&
+                <p style={{marginTop: '30px', color: '#fef43c'}}>{error}</p>
+                }
             </div>
         </div>
     )
