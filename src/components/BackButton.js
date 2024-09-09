@@ -13,7 +13,7 @@ const BackButton = ({title}) => {
             {title === "search" &&
                 <p>← {title.toUpperCase() }<span> for enemy</span></p> 
             }
-            {title != "search" &&
+            {title !== "search" &&
                 <p>← TOP <span>{title}</span></p> 
             }
         </div>
