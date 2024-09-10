@@ -7,7 +7,7 @@ import ClanSearch from './pages/ChallengePage';
 
 function App() {
     return (
-        <Router>
+        <Router basename={process.env.PUBLIC_URL}>
             <Routes>
                 <Route path="/" element={<HomePage/>}></Route>
                 <Route path="/clan-list" element={<ClanListPage/>}></Route>

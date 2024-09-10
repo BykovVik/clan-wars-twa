@@ -87,7 +87,7 @@ const HomePage = () => {
                     </>
                 )}
                 {error&&
-                <p style={{marginTop: '30px', color: '#fef43c'}}>{error}</p>
+                <p className="Error">{error}</p>
                 }
             </div>
         </div>
